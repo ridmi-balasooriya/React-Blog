@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import articles from "./article-content";
 
 const ArticlePage = () => {
@@ -10,8 +10,9 @@ const ArticlePage = () => {
         <>
             <h1>{article.title}</h1>
             {article.content.map((paragraph) => (
-                <p key={paragraph}>{paragraph}</p>
+                <p key={paragraph}>{paragraph}</p>  
             ))}
+            <Link to={'/articles'} className='button'>Back to Articles</Link>
         </>
     );
 }
