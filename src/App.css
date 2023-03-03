@@ -43,3 +43,28 @@ nav ul li a:hover{
   padding-bottom: 20px;
   line-height: 24px;
 }
+.article-snippet{
+  border-bottom: 3px solid #000;
+  margin-bottom: 30px;
+}
+#page_body .article-snippet p{
+  padding-bottom: 0px;
+}
+.article-snippet a{
+  display: inline-block;
+  margin: 0px 0px 20px 0px;
+  padding: 5px 30px;
+  background: #000;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 14px;
+  border: 3px solid #000;
+}
+.article-snippet a:hover{
+  background:#fff;
+  color:#000;
+}
+.article-snippet h3{
+  font-size: 24px;
+}
