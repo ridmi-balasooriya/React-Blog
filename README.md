@@ -1,4 +1,4 @@
-# react-blog
+# React Blog
 create a blog using react.js, node.js, mongoDB
 
 ### Prerequisites
