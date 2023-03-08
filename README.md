@@ -9,7 +9,7 @@ Getting Started
 To get started, follow these steps:
 
 ### Clone the repository to your local machine:
-#### git clone https://github.com/your-username/react-node-mongodb-blog.git
+#### git clone https://github.com/ridmi-balasooriya/react-blog.git
 
 ### Install the dependencies for the backend by running the following command in the root directory of the project:
 #### `cd react-blog`
