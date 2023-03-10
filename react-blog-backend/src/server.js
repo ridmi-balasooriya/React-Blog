@@ -23,16 +23,12 @@ app.put('/api/articles/:name/upvote',async (req, res) => {
     
     const { name } = req.params;
 
+    await db.collection('articles').updateOne({ name }, {
+        $inc: {upvotes: 1 }
+    });
+
     const article = await db.collection('articles').findOne({ name });
- 
-    if(article){
-        await db.collection('articles').updateOne({ name }, { 
-            $inc: {upvotes: 1 }
-        });
-        res.send(`The ${ name } article now has ${article.upvotes} upvotes.!`);
-    }else{
-        res.send('That article doesn\'t exist');
-    }
+    res.json(article);
     
 });
 
@@ -40,17 +36,11 @@ app.post('/api/articles/:name/comments', async (req, res) => {
     const { name } = req.params;
     const { postedBy, text } = req.body;
 
+    await db.collection('articles').updateOne({ name }, { 
+        $push: { comments: { postedBy, text} }
+    });
     const article = await db.collection('articles').findOne({ name });
-        
-    if(article){
-        await db.collection('articles').updateOne({ name }, { 
-            $push: { comments: { postedBy, text} }
-        });
-        res.send(article);
-    }else{
-        res.send('That article doesn\'t exist');
-    }
-  
+    res.json(article);  
     
 });
 
