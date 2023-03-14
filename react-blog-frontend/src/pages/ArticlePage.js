@@ -5,12 +5,15 @@ import articles from "./article-content";
 import CommentsList from "../components/CommentsList";
 import AddCommnetForm from "../components/AddCommentForm";
 import NotFoundPage from "./NotFoundPage";
+import useUser from "../hooks/useUser";
 
 const ArticlePage = () => {
     const params = useParams();
     const { articleId } = params;
     
     const [articleInfo, setArticleInfo] = useState({upvotes: 0, comments: []});
+
+    const { user, isLoading } = useUser();
     
     useEffect(() => {
         const loadArticleInfor = async() => {
@@ -44,15 +47,23 @@ const ArticlePage = () => {
         <>
             <h1>{article.title}</h1>
             <p>
-                <button className="button upvotebtn" onClick={addUpvote}>Upvote</button>
+                {user 
+                    ? <button className="button upvotebtn" onClick={addUpvote}>Upvote</button>
+                    : <button className="button upvotebtn">Log in to upvote</button>                
+                }
+                
                 This article has {articleInfo.upvotes} upvote(s)                
             </p>
             {article.content.map((paragraph) => (
                 <p key={paragraph}>{paragraph}</p>  
             ))}
 
-            <AddCommnetForm articleName={articleId} onArticleUpdated={(updatedArticle) => setArticleInfo(updatedArticle)} />
-
+            {user
+                ? <AddCommnetForm articleName={articleId} onArticleUpdated={(updatedArticle) => setArticleInfo(updatedArticle)} />
+                : <button className="button upvotebtn">Log in to add a comment</button>
+            }
+            
+            
             <CommentsList comments={articleInfo.comments} />
 
             <Link to={'/articles'} className='button'>Back to Articles</Link>

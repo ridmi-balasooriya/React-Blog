@@ -125,8 +125,9 @@ input, textarea{
   width: 350px;
   margin: 10px auto;
   background: #f6f6f6;
-  padding: 30px;
+  padding: 50px 30px;
   text-align: center;
+  border-radius: 15px;
 }
 .login-form input{
   font-size: 16px;

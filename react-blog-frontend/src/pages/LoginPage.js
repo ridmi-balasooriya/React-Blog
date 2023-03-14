@@ -20,7 +20,7 @@ const LoginPage = () => {
 
     return(
         <>
-            <h1>Login Page</h1>            
+            <h1>Login to Your Account</h1>            
             <div className="login-form">
                 {error && <div className="error">{error}</div>}
                 <input placeholder="Your email address" value={email} onChange={(e) => setEmail(e.target.value)} />
