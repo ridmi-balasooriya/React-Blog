@@ -10,32 +10,46 @@ import useUser from "../hooks/useUser";
 const ArticlePage = () => {
     const params = useParams();
     const { articleId } = params;
-    
-    const [articleInfo, setArticleInfo] = useState({upvotes: 0, comments: []});
+
+    const [articleInfo, setArticleInfo] = useState({upvotes: 0, comments: [], canUpvote:false});
 
     const { user, isLoading } = useUser();
     
     useEffect(() => {
-        const loadArticleInfor = async() => {
-            const response = await axios.get(`/api/articles/${articleId}`);
-            const newArticleInfo = response.data;
-            setArticleInfo(newArticleInfo)
-        }
 
-        loadArticleInfor();
+        const loadArticleInfor = async() => {
+            const token = user && await user.getIdToken();
+            
+            const headers =token ? {authtoken: token} : {};
+            
+            const response = await axios.get(`/api/articles/${articleId}`, { headers });
+            
+            const newArticleInfo = response.data;
+            
+            setArticleInfo(newArticleInfo);
+        }
         
-    }, [articleId])
+        if(!isLoading){
+            loadArticleInfor();
+        }
+        
+        
+    }, [isLoading, user]);
 
        
     const article = articles.find( (article) => article.name === articleId);
 
-    const addUpvote = async () => {
-       
-        const response = await axios.put(`/api/articles/${articleId}/upvote`);
+    const addUpvote = async () => {        
+
+        const token = user && await user.getIdToken();
+        
+        const headers = token ? { authtoken: token } : {};
+            
+        const response = await axios.put(`/api/articles/${articleId}/upvote`, null, { headers });
 
         const updatedArticle = response.data;
+                
         setArticleInfo(updatedArticle);
-
     }
 
 
@@ -48,8 +62,11 @@ const ArticlePage = () => {
             <h1>{article.title}</h1>
             <p>
                 {user 
-                    ? <button className="button upvotebtn" onClick={addUpvote}>Upvote</button>
-                    : <button className="button upvotebtn">Log in to upvote</button>                
+                    ? ( articleInfo.canUpvote 
+                        ? <button className="button upvotebtn" onClick={addUpvote}>Upvote</button>
+                        : <button className="button upvotebtn upvoted" onClick={addUpvote} >Upvoted</button>
+                    )
+                    : <Link to={'/login'} className='button upvotebtn'>Log in to upvote</Link>                
                 }
                 
                 This article has {articleInfo.upvotes} upvote(s)                
@@ -60,7 +77,7 @@ const ArticlePage = () => {
 
             {user
                 ? <AddCommnetForm articleName={articleId} onArticleUpdated={(updatedArticle) => setArticleInfo(updatedArticle)} />
-                : <button className="button upvotebtn">Log in to add a comment</button>
+                : <Link to={'/login'} className='button upvotebtn'>Log in to add a comment</Link>
             }
             
             

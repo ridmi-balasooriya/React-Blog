@@ -1,16 +1,15 @@
 const CommentsList =({ comments }) => {
-    
-    if(comments.length === 0){
+
+    if((comments === undefined) || (comments === null) || (comments.length === 0)){
         return null;
     }
-    
     return(
         <>
             <h3>Comments:</h3>
             {
                 comments.map(comment => (
-                    <div className="comment" key={comment.postedBy + ": " + comment.text}>
-                        <h4>{comment.postedBy}</h4>
+                    <div className="comment" key={comment.email + ": " + comment.text}>
+                        <h4>{comment.email}</h4>
                         <p>{comment.text}</p>
                     </div>
                 ))
