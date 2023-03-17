@@ -25,4 +25,6 @@ article-content.js
 */yarn-error.log*
 */mongo-db-data/
 
+*/build
+
 react-blog-backend/credentials.json
