@@ -26,5 +26,9 @@ article-content.js
 */mongo-db-data/
 
 */build
+*/.env
+*/prod-env.yaml
+*/.gcloudignore
+MeOnly.txt
 
 react-blog-backend/credentials.json
